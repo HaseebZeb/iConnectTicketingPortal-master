@@ -1,0 +1,101 @@
+﻿
+@model BasketWebPanel.ViewModels.EarningStatisticsViewModel
+
+<div class="panel-body panel">
+    <div class="row">
+        <div class="row" style="margin-left:6px; margin-right:6px">
+            <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="form-group form-inline  ">
+                    <label class="control-label" title="">Category Names</label>
+                    <span class="ico-help" title="Search by a order status"><i class="fa fa-question-circle"></i></span>
+                    @*@Html.DropDownList("OrderStatusId", new SelectList(Model.OrderStatusOptions.Items,
+                "value", "Text", Model.OrderStatusOptions.SelectedValue), new { @class = "form-control", @Id = "aioOrderStatus" })*@
+                    @Html.DropDownList("Category_Id", new SelectList(Model.Categories.Items,
+                "value", "Text", Model.Categories.SelectedValue), new { @class = "form-control", @Id = "category_id" })
+                    @*<select class="form-control" id="category_id" >
+                        <option value="" >All</option>
+                        @foreach (var cat in Model.Categories.Categories)
+                        {
+                            <option value="@cat.Id" >@cat.Name</option>
+                        }
+
+                    </select>*@
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="form-group form-inline ">
+                    <label class="control-label" title="">Payment Method</label>
+                    <span class="ico-help" title="Search by a shipping status"><i class="fa fa-question-circle"></i></span>
+                    @Html.DropDownList("PaymentMethodId", new SelectList(Model.PaymentMethodOptions.Items,
+                "value", "Text", Model.PaymentMethodOptions.SelectedValue), new { @class = "form-control", @Id = "aioPaymentMethod" })
+                </div>
+            </div>
+           
+           
+        </div>
+        <div class="row" style="margin-left:6px; margin-right:6px">
+            
+            <div class="col-md-6 col-sm-12 col-xs-12">
+                <div class="form-group form-inline ">
+                    <label class="control-label" for="SearchStartDate" title="">Start Date</label>
+                    <span class="ico-help" title="Search by a start date"><i class="fa fa-question-circle"></i></span>
+                    <div class='input-group date'>
+                        <input type='text' class="form-control" id="datetimepicker1" name="StartDate" value="@Model.StartDate" />
+                        <span class="input-group-addon open-datetimepicker1">
+                            <span class="glyphicon glyphicon-calendar "></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group form-inline ">
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                    <label class="control-label" for="SearchEndDate" title="">End Date</label>
+                    <span class="ico-help" title="Search by a end date"><i class="fa fa-question-circle"></i></span>
+                    <div class='input-group date'>
+                        <input type='text' class="form-control " id="datetimepicker2" name="EndDate" value="@Model.EndDate" />
+                        <span class="input-group-addon open-datetimepicker2">
+                            <span class="glyphicon glyphicon-calendar "></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-7 col-md-offset-5">
+            <button type="button" onclick="OnSubmit()" id="search-customers" class="btn btn-primary btn-search">
+                <i class="fa fa-search"></i>
+                Search
+            </button>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+
+<script>
+    $(document).ready(function () {
+
+
+
+        OnSubmit();
+    });
+
+    function OnSubmit() {
+        var category_id = $("#category_id option:selected").val(); 
+        var paymentMethod = $("#aioPaymentMethod option:selected").val();
+        var StartDate = $("#datetimepicker1").val();
+        var EndDate = $("#datetimepicker2").val();
+
+        var url = '@Html.Raw(Url.Action("SearchEarningResults", "Admin",new { CategoryId="__1__", PaymentMethod = "__2__", StartDate="__3__", EndDate="__4__" }))';
+        url = url.replace("__1__", category_id);
+        url = url.replace("__2__", paymentMethod);
+        url = url.replace("__3__", StartDate);
+        url = url.replace("__4__", EndDate);
+
+ 
+        $('#tblSearchResult').load(url);
+
+        //$("#divLoader").hide();
+    }
+</script>

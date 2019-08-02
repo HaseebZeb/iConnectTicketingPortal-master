@@ -1,0 +1,60 @@
+﻿@model BasketWebPanel.ViewModels.EarningStatisticsViewModel
+@{
+    ViewBag.Title = "ManageOrders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .table caption + thead tr:first-child th,
+    .table colgroup + thead tr:first-child th,
+    .table thead:first-child tr:first-child th,
+    .table caption + thead tr:first-child td,
+    .table colgroup + thead tr:first-child td,
+    .table thead:first-child tr:first-child td {
+        border-top: 0;
+        text-align: center;
+    }
+</style>
+<div class="right_col" role="main">
+    <div class="row">
+        <div class="col-md-12 col-xs-12">
+            <div class="panel-heading">
+                <div class="x_title">
+                    <h3>Earnings Statistics</h3>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    @{
+                        Html.RenderAction("EarningsStatistics", "Admin");
+                    }
+                    <div id="tblSearchResult">
+                   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    function order_details(order_id) {
+        var url = '@Url.Action("Index", "Orders",new {Area="Dashboard", OrderId = "__ID__" })';
+        url = url.replace("__ID__", order_id);
+        window.location = url;
+
+
+    }
+    
+    $(document).ready(function () {
+
+        var table = $('#datatable_Earning').DataTable({
+            "pagingType": "full_numbers",
+            columnDefs: [{
+                orderable: false,
+                className: 'select-checkbox',
+                targets: [1, 2]
+            }]
+        });
+
+    });
+
+</script>

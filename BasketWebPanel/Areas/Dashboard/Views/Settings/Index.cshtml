@@ -1,0 +1,235 @@
+﻿@model  BasketWebPanel.ViewModels.SettingsViewModel
+@{
+    ViewBag.Title = "GeneralSettings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*<input id="ImageValue" type="hidden" value="@Model.BannerImage" />*@
+<div class="right_col" role="main">
+    <div class="row">
+        <div class="x_panel ">
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success" id="success-alert">
+                    <button type="button" class="close" data-dismiss="alert">x</button>
+                    <strong></strong><span>@TempData["SuccessMessage"]</span>
+                </div>
+            }
+            <div class="alert alert-error" id="error-alert" hidden>
+                <button type="button" class="close" data-dismiss="alert">x</button>
+                <strong>Error! </strong> <span> </span>
+            </div>
+            <div class="x_title">
+                <h3 class="pull-left">General Settings</h3>
+                @*<div class="pull-right">
+                        <a href="#" class="btn bg-green">
+                            <i class="fa fa-plus-square"></i>
+                            Save
+                        </a>
+                    </div>*@
+                <div class="clearfix"></div>
+            </div>
+            <p>
+            </p>
+            @using (Ajax.BeginForm("Index", "Settings", new AjaxOptions { OnSuccess = "OnSuccessSettingsUpdation", OnFailure = "OnFailedInsertion", LoadingElementId = "divLoader" }, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="x_content">
+                    @*<div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3 col-xs-5 " style="text-align:left;">
+                                <label class="control-label" for="">Delivery Fee</label>
+                                <span class="ico-help" title="Delivery Fee will be added to each order"><i class="fa fa-question-circle"></i></span>
+                            </div>
+                            <div class="col-md-9 col-xs-9 ">
+                                @if (Model.Role == Utility.RoleTypes.SuperAdmin)
+                                {
+                                    @Html.TextBoxFor(x => x.DeliveryFee, new { @class = "form-control", placeholder = "Delivery Fee", id = "DeliveryFee" })
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(x => x.DeliveryFee, new { @class = "form-control", placeholder = "Delivery Fee", id = "DeliveryFee", @readonly = true })
+                                }
+                                @Html.ValidationMessageFor(m => m.DeliveryFee, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>*@
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3 col-xs-5 " style="text-align:left;">
+                                <label class="control-label" for="">Service Fee</label>
+                                <span class="ico-help" title="Service Fee will be added to each order"><i class="fa fa-question-circle"></i></span>
+                            </div>
+                            <div class="col-md-9 col-xs-9 ">
+                                @*<input type="text" class="form-control text-box single-line" />*@
+                                @if (Model.Role == Utility.RoleTypes.SuperAdmin)
+                                {
+                                    @Html.TextBoxFor(x => x.ServiceFee, new { @class = "form-control", placeholder = "Service Fee", id = "ServiceFee" })
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(x => x.ServiceFee, new { @class = "form-control", placeholder = "Service Fee", id = "ServiceFee", @readonly = true })
+                                }
+                                @Html.ValidationMessageFor(m => m.ServiceFee, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3 col-xs-5 " style="text-align:left;">
+                                <label class="control-label" for="">Minumum Order Price</label>
+
+                            </div>
+                            <div class="col-md-9 col-xs-9 ">
+                                @if (Model.Role == Utility.RoleTypes.SuperAdmin)
+                                {
+                                    @Html.TextBoxFor(x => x.MinimumOrderPrice, new { @class = "form-control", placeholder = "Miimum Order Price", id = "MinimumOrderPrice" })
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(x => x.MinimumOrderPrice, new { @class = "form-control", placeholder = "Miimum Order Price", id = "MinimumOrderPrice", @readonly = true })
+                                }
+                                @Html.ValidationMessageFor(m => m.MinimumOrderPrice, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>*@
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3 col-xs-5 " style="text-align:left;">
+                                <label class="control-label" for="">Currency</label>
+
+                            </div>
+                            <div class="col-md-9 col-xs-9 ">
+                                @Html.TextBoxFor(x => x.Currency, new { @class = "form-control", placeholder = "Currency", id = "Currency", @readonly = true })
+                                @Html.ValidationMessageFor(m => m.Currency, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3 col-xs-5 " style="text-align:left;">
+                                <label class="control-label" for="">Nearby Radius</label>
+
+                            </div>
+                            <div class="col-md-9 col-xs-9 ">
+                                @if (Model.Role == Utility.RoleTypes.SuperAdmin)
+                                {
+                                    @Html.TextBoxFor(x => x.NearByRadius, new { @class = "form-control", placeholder = "Nearby Radius", id = "NearbyRadius" })
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(x => x.NearByRadius, new { @class = "form-control", placeholder = "Nearby Radius", id = "NearbyRadius", @readonly = true })
+                                }
+                                @Html.ValidationMessageFor(m => m.NearByRadius, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3 col-xs-5 " style="text-align:left;">
+                                <label class="control-label" for="">About Us</label>
+                            </div>
+                            <div class="col-md-9 col-xs-9 ">
+                                @if (Model.Role == Utility.RoleTypes.SuperAdmin)
+                                {
+                                    @Html.TextAreaFor(x => x.AboutUs, new { @class = "form-control", placeholder = "About Us", id = "AboutUs" })
+                                }
+                                else
+                                {
+                                    @Html.TextAreaFor(x => x.AboutUs, new { @class = "form-control", placeholder = "About Us", id = "AboutUs", @readonly = true })
+                                }
+                                @Html.ValidationMessageFor(m => m.AboutUs, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3 col-xs-5 " style="text-align:left;">
+                                <label class="control-label" for="">Help</label>
+
+                            </div>
+                            <div class="col-md-9 col-xs-9 ">
+                                @if (Model.Role == Utility.RoleTypes.SuperAdmin)
+                                {
+                                    @Html.TextAreaFor(x => x.Help, new { @class = "form-control", placeholder = "Help", id = "Help" })
+                                }
+                                else
+                                {
+                                    @Html.TextAreaFor(x => x.Help, new { @class = "form-control", placeholder = "Help", id = "Help", @readonly = true })
+                                }
+                                @Html.ValidationMessageFor(m => m.Help, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                
+                    @*<div class="form-group">
+                            <div class="row">
+                                <div class="">
+                                    <div class="col-md-9" id="EditImage" hidden>
+                                        <label>Banner Image</label>
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                                <img src="@ApiCall.BaseUrl@Model.BannerImage" alt="" width="48" height="48">
+                                            </div>
+                                        </div>
+                                        <button id="btnDeleteImg" title="Delete" onclick="EditDivDeletePic()" class="btn btn-danger btn-xs deleteButtons" data-title="Delete" data-productid="8" data-toggle="modal" data-target="#deleteModal"><span class="glyphicon glyphicon-trash"></span></button>
+
+                                        <div hidden id="HasImage1">@Model.BannerImage</div>
+                                    </div>
+                                    <div id="UploadImage" hidden>
+                                        <div class="col-md-3">
+                                            <label>Upload Banner Image</label>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="input-group image-preview" style="margin-bottom:0px">
+                                                <input type="text" name="BannerImage" id="txtImageUrl" data-val="true" data-val-required="Please select an image" class="form-control image-preview-filename input-validation-error" readonly> <!-- don't give a name === doesn't send on POST/GET -->
+                                                <span class="input-group-btn">
+                                                    <!-- image-preview-clear button -->
+                                                    <button type="button" id="clearImage" class="btn btn-default image-preview-clear" onclick="ClearImage()" style="display:none;">
+                                                        <span class="glyphicon glyphicon-remove"></span> Clear
+                                                    </button>
+                                                    <!-- image-preview-input -->
+                                                    <div class="btn btn-default image-preview-input">
+                                                        <span class="glyphicon glyphicon-folder-open"></span>
+                                                        <span class="image-preview-input-title">Browse</span>
+                                                        <input type="file" accept="image/png, image/jpeg, image/gif" onchange="UploadImage()" id="fileInput" name="Image" /> <!-- rename it -->
+                                                    </div>
+                                                </span>
+                                            </div>
+                                            @Html.ValidationMessageFor(m => m.BannerImage, "", new { @class = "text-danger", @Id = "errImageUrl" })
+                                        </div>
+                                        <!-- /input-group image-preview [TO HERE]-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                    <div class="row text-right">
+                        @if (Model.Role == Utility.RoleTypes.SuperAdmin)
+                        {
+                            <button type="submit" class="btn btn-success text-right">Update Settings</button>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/jquery")
+<script>
+
+    $(document).ready(function () {
+
+        setTimeout(
+function () {
+    if ($('#success-alert') != null) {
+        $('#success-alert').slideUp(500, function () {
+        });
+    }
+}, 3000)
+    });
+
+
+    function OnSuccessSettingsUpdation() {
+        window.location.href = "@Url.Action("Index", "Settings")";
+    }
+
+</script>
